@@ -11,7 +11,7 @@
         android:startOffset="100" />
 
     <translate android:duration = "100"
-        android:fromXDelta="5$p"
+        android:fromXDelta="5%p"
         android:toXDelta="0"
         android:startOffset="200" />
 </set>
