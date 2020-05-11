@@ -1,5 +1,6 @@
 package com.arianameble.quiz;
 
+import android.content.SharedPreferences;
 import
         android.os.Bundle;
 
@@ -9,11 +10,23 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String CHOICES = "pref_numberOfChoices";
+    public static final String CATEGORIES = "pref_categoriesToInclude";
+
+    private boolean phoneDevice = true;
+
+    private boolean preferencesChanged = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        androidx.preference.PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+
+        androidx.preference.PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(preferenceChangeListener);
 
     }
 
@@ -46,4 +62,44 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            preferencesChanged = true;
+
+            FirstFragment quizFragment = (FirstFragment) getSupportFragmentManager().findFragmentById(R.id.quizFragment);
+
+            if(key==CHOICES)
+            {
+                quizFragment.updateGuessRows(sharedPreferences);
+
+                quizFragment.resetQuiz();
+            }
+            else if (key.equals(CATEGORIES) )
+            {
+                Set<String> categories = sharedPreferences.getStringSet(CATEGORIES, null);
+
+                if(categories != null && categories.size()>0)
+                {
+                    quizFragment.updateCategories(sharedPreferences);
+                    quizFragment.resetQuiz();
+                }
+                else
+                {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    categories.add(getString(R.string.default_furniture));
+                    editor.putStringSet(CATEGORIES, categories);
+                    editor.apply();
+
+                    Toast.makeText(MainActivity.this, R.string.default_furniture_message, Toast.LENGTH_SHORT).show();
+                }
+
+                Toast.makeText(MainActivity.this, R.string.restarting_quiz,Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    };
+
+
 }
