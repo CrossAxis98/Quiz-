@@ -2,13 +2,13 @@
 <resources>
     <string-array name="Lista_kategorii">
         <item>Fotele</item>
-        <item>Kanapy i narożniki</item>
+        <item>Kanapy_i_narożniki</item>
         <item>Łóżka</item>
     </string-array>
 
     <string-array name="Lista_kategorii_dla_ustawień">
         <item>Fotele</item>
-        <item>Kanapy i narożniki</item>
+        <item>Kanapy_i_narożniki</item>
         <item>Łóżka</item>
     </string-array>
 

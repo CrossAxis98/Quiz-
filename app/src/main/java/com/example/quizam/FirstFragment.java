@@ -1,4 +1,5 @@
-package com.arianameble.quiz;
+package com.example.quizam;
+
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -76,38 +77,38 @@ public class FirstFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         // Inflate the layout for this fragment
-       super.onCreateView(inflater, container, savedInstanceState);
+        super.onCreateView(inflater, container, savedInstanceState);
 
-       View view = inflater.inflate(R.layout.fragment_first, container, false);
+        View view = inflater.inflate(R.layout.fragment_first, container, false);
 
-       fileNameLists = new ArrayList<>();
-       quizFurnituresList = new ArrayList<>();
-       random = new SecureRandom();
-       handler = new Handler();
+        fileNameLists = new ArrayList<>();
+        quizFurnituresList = new ArrayList<>();
+        random = new SecureRandom();
+        handler = new Handler();
 
-       shakeAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.incorrect_shake);
-       shakeAnimation.setRepeatCount(3);
+        shakeAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.incorrect_shake);
+        shakeAnimation.setRepeatCount(3);
 
-       quizLinearLayout = (LinearLayout) view.findViewById(R.id.quizLinearLayout);
-       questionNumberTextView = (TextView) view.findViewById(R.id.questionNumberTextView);
-       furnitureImageView = (ImageView) view.findViewById(R.id.furnitureImageView);
-       guessLinearLayouts = new LinearLayout[4];
-       guessLinearLayouts[0] = (LinearLayout) view.findViewById(R.id.row1LinearLayout);
-       guessLinearLayouts[1] = (LinearLayout) view.findViewById(R.id.row2LinearLayout);
-       guessLinearLayouts[2] = (LinearLayout) view.findViewById(R.id.row3LinearLayout);
-       guessLinearLayouts[3] = (LinearLayout) view.findViewById(R.id.row4LinearLayout);
-       answerTextView = (TextView) view.findViewById(R.id.answerTextView);
+        quizLinearLayout = (LinearLayout) view.findViewById(R.id.quizLinearLayout);
+        questionNumberTextView = (TextView) view.findViewById(R.id.questionNumberTextView);
+        furnitureImageView = (ImageView) view.findViewById(R.id.furnitureImageView);
+        guessLinearLayouts = new LinearLayout[4];
+        guessLinearLayouts[0] = (LinearLayout) view.findViewById(R.id.row1LinearLayout);
+        guessLinearLayouts[1] = (LinearLayout) view.findViewById(R.id.row2LinearLayout);
+        guessLinearLayouts[2] = (LinearLayout) view.findViewById(R.id.row3LinearLayout);
+        guessLinearLayouts[3] = (LinearLayout) view.findViewById(R.id.row4LinearLayout);
+        answerTextView = (TextView) view.findViewById(R.id.answerTextView);
 
-       for(LinearLayout row: guessLinearLayouts) {
-           for (int column = 0; column < row.getChildCount(); column++) {
-               Button button = (Button) row.getChildAt(column);
-               button.setOnClickListener(guessButtonListener);
-           }
-       }
+        for(LinearLayout row: guessLinearLayouts) {
+            for (int column = 0; column < row.getChildCount(); column++) {
+                Button button = (Button) row.getChildAt(column);
+                button.setOnClickListener(guessButtonListener);
+            }
+        }
 
-       questionNumberTextView.setText(getString(R.string.question, 1, FURNITURES_IN_QUIZ));
+        questionNumberTextView.setText(getString(R.string.question, 1, FURNITURES_IN_QUIZ));
 
-       return view;
+        return view;
     }
 
     public void updateGuessRows(SharedPreferences sharedPreferences) {
@@ -147,7 +148,7 @@ public class FirstFragment extends Fragment {
 
         }catch(IOException ex)
         {
-            Log.d(TAG, "resetQuiz: błąd podczas ładowania plików z obrazamie", ex);
+            Log.d(TAG, "resetQuiz: błąd podczas ładowania plików z obrazami", ex);
         }
 
         correctAnswers = 0;
@@ -334,3 +335,4 @@ public class FirstFragment extends Fragment {
 
     }
 }
+

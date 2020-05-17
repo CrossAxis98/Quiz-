@@ -1,23 +1,19 @@
-package com.arianameble.quiz;
+package com.example.quizam;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import
-        android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.preference.PreferenceManager;
-
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import androidx.preference.PreferenceManager;
 
 import java.util.Set;
 
@@ -29,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean phoneDevice = true;
 
     private boolean preferencesChanged = true;
+    SharedPreferences preferences;
 
 
     @Override
@@ -39,9 +36,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         androidx.preference.PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-
         androidx.preference.PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(preferenceChangeListener);
-
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         int screenSize = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
 
         if ((screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE) || (screenSize == Configuration.SCREENLAYOUT_SIZE_XLARGE))
@@ -49,16 +45,17 @@ public class MainActivity extends AppCompatActivity {
             phoneDevice = false;
         }
 
-       // if(phoneDevice) {
-         //   setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        //}
+         if(phoneDevice) {
+           setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        }
     }
 
     @Override
     protected void onStart()
     {
         super.onStart();
-
+      //  Context mContext = getApplicationContext();
+      //  SharedPreferences sharedPreferences = mContext.getSharedPreferences(CATEGORIES, Context.MODE_PRIVATE);
         if(preferencesChanged)
         {
             FirstFragment quizFragment = (FirstFragment) getSupportFragmentManager().findFragmentById(R.id.quizFragment);
@@ -88,9 +85,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+   public boolean onOptionsItemSelected(MenuItem item) {
 
-        Intent preferenceIntent = new Intent(this, SettingsActivity.class);
+        Intent preferenceIntent = new Intent(this, SecondFragment.class);
         startActivity(preferenceIntent);
 
         return super.onOptionsItemSelected(item);

@@ -12,15 +12,15 @@
 
     <fragment
         android:id="@+id/settingsActivityFragment"
-        android:name="com.arianameble.quiz.First2Fragment"
+        android:name="com.example.quizam.SecondFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        tools:layout="@layout/fragment_first2" />
+        tools:layout="@layout/fragment_second" />
 
     <fragment
         android:id="@+id/quizFragment"
-        android:name="com.arianameble.quiz.FirstFragment"
+        android:name="com.example.quizam.FirstFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"

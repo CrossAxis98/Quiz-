@@ -15,11 +15,11 @@
 
         android:entries="@array/Lista_kategorii_dla_ustawień"
         android:entryValues="@array/Lista_kategorii"
-        android:key="pref_regionsToInclude"
+        android:key="pref_categoriesToInclude"
         android:title="@string/furniture_categories"
         android:summary="@string/furniture_categories_description"
         android:persistent="true"
-        android:defaultValue="Lista_kategorii"
+        android:defaultValue="@array/Lista_kategorii"
 
         />
 

@@ -1,6 +1,7 @@
 package com.arianameble.quiz;
 
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,21 +9,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.preference.PreferenceFragmentCompat;
 
-public class First2Fragment extends Fragment {
+public class First2Fragment extends PreferenceFragmentCompat {
+
 
     @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_first2, container, false);
-    }
-
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.preferences);
     }
 }
