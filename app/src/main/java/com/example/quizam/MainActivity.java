@@ -13,6 +13,10 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 
 import java.util.Set;
@@ -21,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String CHOICES = "pref_numberOfChoices";
     public static final String CATEGORIES = "pref_categoriesToInclude";
+
 
     private boolean phoneDevice = true;
 
@@ -87,11 +92,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
    public boolean onOptionsItemSelected(MenuItem item) {
 
-        Intent preferenceIntent = new Intent(this, SecondFragment.class);
-        startActivity(preferenceIntent);
+        switch (item.getItemId()) {
 
+            case R.id.action_settings:
+                 Intent preferenceIntent = new Intent(this, SettingsActivity.class);
+                 startActivity(preferenceIntent);
+            return true;
+
+            case R.id.action_best:
+                Intent bestResIntent = new Intent(this, BestResultsActivity.class);
+                startActivity(bestResIntent);
+        }
         return super.onOptionsItemSelected(item);
     }
+
+
 
     private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override

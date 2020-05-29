@@ -3,7 +3,9 @@ package com.example.quizam;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
@@ -18,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +28,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import java.io.IOException;
@@ -70,6 +74,12 @@ public class FirstFragment extends Fragment {
     private LinearLayout[] guessLinearLayouts;
 
     private TextView answerTextView;
+
+    private Dialog dialogSave;
+
+    private String nick;
+
+    private BestResultViewModel bestResultViewModel;
 
     @Override
     public View onCreateView(
@@ -278,18 +288,7 @@ public class FirstFragment extends Fragment {
                 disableButtons();
 
                 if(correctAnswers == FURNITURES_IN_QUIZ){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Quiz results");
-                    builder.setMessage(getString(R.string.results, totalGuessess, (1000/(double) totalGuessess)));
-                    builder.setPositiveButton(R.string.reset_quiz, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            resetQuiz();
-                        }
-                    });
-
-                    builder.setCancelable(false);
-                    builder.show();
+                    showAlertDialog(getActivity());
                 }
                 else {
 
@@ -322,6 +321,66 @@ public class FirstFragment extends Fragment {
             }
         }
     }
+
+    public void  showAlertDialog (final Activity activity){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Wyniki quizu");
+        builder.setMessage(getString(R.string.results, totalGuessess, (1000/(double) totalGuessess)));
+        builder.setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                resetQuiz();
+            }
+        });
+        builder.setPositiveButton(R.string.save_score, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                showSaveDialog(activity);
+            }
+        });
+
+
+        builder.setCancelable(false);
+        builder.show();
+
+    }
+
+    public void showSaveDialog (Activity activity){
+        dialogSave = new Dialog(activity);
+        dialogSave.setCancelable(false);
+        dialogSave.setContentView(R.layout.score_save_layout);
+
+
+        Button btnExit = (Button) dialogSave.findViewById(R.id.btndialogExit);
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogSave.dismiss();
+                resetQuiz();
+            }
+        });
+
+        Button btnSave = (Button) dialogSave.findViewById(R.id.btndialogSave);
+        final EditText editTextNick = (EditText) dialogSave.findViewById(R.id.editTextNick);
+        TextView textViewScore = (TextView) dialogSave.findViewById(R.id.textViewScore);
+        textViewScore.setText(getString(R.string.results, totalGuessess, (1000/(double) totalGuessess)));
+        bestResultViewModel = new ViewModelProvider(this).get(BestResultViewModel.class);
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nick = editTextNick.getText().toString();
+                BestResult bestResult = new BestResult(nick, totalGuessess);
+                bestResultViewModel.insert(bestResult);
+                dialogSave.dismiss();
+                resetQuiz();
+
+            }
+        });
+
+        dialogSave.show();
+
+    }
+
 
 
 
