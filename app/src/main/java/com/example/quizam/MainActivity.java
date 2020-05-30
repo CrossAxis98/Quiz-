@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.nfc.Tag;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String CHOICES = "pref_numberOfChoices";
     public static final String CATEGORIES = "pref_categoriesToInclude";
 
+    private static final String TAG = "MainActivity";
+
 
     private boolean phoneDevice = true;
 
@@ -39,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Log.d(TAG, "onCreate: started");
 
         androidx.preference.PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         androidx.preference.PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(preferenceChangeListener);
@@ -51,14 +57,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
          if(phoneDevice) {
-           setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+          setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         }
+
+
     }
 
     @Override
     protected void onStart()
     {
         super.onStart();
+
+        Log.d(TAG, "onStart: started");
       //  Context mContext = getApplicationContext();
       //  SharedPreferences sharedPreferences = mContext.getSharedPreferences(CATEGORIES, Context.MODE_PRIVATE);
         if(preferencesChanged)
@@ -73,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d(TAG, "onCreateOptionsMenu: started");
        int orientation = getResources().getConfiguration().orientation;
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
@@ -93,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected: started");
 
         switch (item.getItemId()) {
 
@@ -116,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             preferencesChanged = true;
+            Log.d(TAG, "onSharedPreferenceChanged: started");
 
             FirstFragment quizFragment = (FirstFragment) getSupportFragmentManager().findFragmentById(R.id.quizFragment);
 

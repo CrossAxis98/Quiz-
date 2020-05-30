@@ -25,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -91,6 +92,8 @@ public class FirstFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_first, container, false);
 
+        Log.d(TAG, "onCreateView: started");
+
         fileNameLists = new ArrayList<>();
         quizFurnituresList = new ArrayList<>();
         random = new SecureRandom();
@@ -123,7 +126,7 @@ public class FirstFragment extends Fragment {
 
     public void updateGuessRows(SharedPreferences sharedPreferences) {
         String choices = sharedPreferences.getString(MainActivity.CHOICES, null);
-
+        Log.d(TAG, "updateGuessRows: started");
         guessRows = Integer.parseInt(choices) / 2;
 
         for (LinearLayout layout : guessLinearLayouts) {
@@ -137,10 +140,12 @@ public class FirstFragment extends Fragment {
     }
 
     public void updateCategories(SharedPreferences sharedPreferences){
+        Log.d(TAG, "updateCategories: started");
         categoriesSet = sharedPreferences.getStringSet(MainActivity.CATEGORIES, null);
     }
 
     public void resetQuiz(){
+        Log.d(TAG, "resetQuiz: started");
 
         AssetManager assets = getActivity().getAssets();
 
@@ -187,6 +192,8 @@ public class FirstFragment extends Fragment {
 
     private void loadNextFurniture() {
         String nextImage = quizFurnituresList.remove(0);
+
+        Log.d(TAG, "loadNextFurniture: started");
 
         correctAnswer = nextImage;
 
@@ -236,11 +243,13 @@ public class FirstFragment extends Fragment {
 
     private String getFurnitureName(String name)
     {
+        Log.d(TAG, "getFurnitureName: started");
         return name.substring(name.indexOf("-")+1).replace("-", " ");
     }
 
     private void animate(boolean animateOut)
     {
+        Log.d(TAG, "animate: started");
         if(correctAnswers == 0) return;
 
         int centerX = (quizLinearLayout.getLeft() + quizLinearLayout.getRight())/2;
@@ -274,6 +283,7 @@ public class FirstFragment extends Fragment {
     private View.OnClickListener guessButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Log.d(TAG, "onClick: started");
             Button guessButton = (Button) v;
             String guess = guessButton.getText().toString();
             String answer = getFurnitureName(correctAnswer);
@@ -314,6 +324,7 @@ public class FirstFragment extends Fragment {
 
 
     private void disableButtons(){
+        Log.d(TAG, "disableButtons: started");
         for (int row = 0; row < guessRows; row++){
             LinearLayout guessRow = guessLinearLayouts[row];
             for ( int column = 0; column < 2; column++){
@@ -323,6 +334,7 @@ public class FirstFragment extends Fragment {
     }
 
     public void  showAlertDialog (final Activity activity){
+        Log.d(TAG, "showAlertDialog: started");
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("Wyniki quizu");
         builder.setMessage(getString(R.string.results, totalGuessess, (1000/(double) totalGuessess)));
@@ -347,6 +359,7 @@ public class FirstFragment extends Fragment {
     }
 
     public void showSaveDialog (Activity activity){
+        Log.d(TAG, "showSaveDialog: started");
         dialogSave = new Dialog(activity);
         dialogSave.setCancelable(false);
         dialogSave.setContentView(R.layout.score_save_layout);
@@ -375,7 +388,7 @@ public class FirstFragment extends Fragment {
                 bestResultViewModel.insert(bestResult);
                 dialogSave.dismiss();
                 resetQuiz();
-
+               Toast.makeText(activity , R.string.nowyRekodrd , Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -392,6 +405,7 @@ public class FirstFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.d(TAG, "onViewCreated: started");
 
 
     }

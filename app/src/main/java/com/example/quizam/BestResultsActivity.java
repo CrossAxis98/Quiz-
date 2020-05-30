@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -15,10 +16,13 @@ import java.util.List;
 
 public class BestResultsActivity extends AppCompatActivity {
 
+    private static final String TAG = "BestResultsActivity";
+
     private BestResultViewModel bestResultViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: started");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.best_results_layout);
 
@@ -53,6 +57,7 @@ public class BestResultsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected: started");
 
         switch (item.getItemId()) {
 

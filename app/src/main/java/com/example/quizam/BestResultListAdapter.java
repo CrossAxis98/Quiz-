@@ -28,13 +28,14 @@ public class BestResultListAdapter extends RecyclerView.Adapter<BestResultListAd
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.d(TAG, "onCreateViewHolder: started");
         View view = inflater.inflate(R.layout.recyclerview_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.d(TAG, "onBindViewHolder: called");
+        Log.d(TAG, "onBindViewHolder: started");
         if(bestResults != null){
             BestResult current = bestResults.get(position);
             String percent = String.format("%.2f%%",((1000/(double) current.getDbTotalGuessess())));
@@ -50,12 +51,14 @@ public class BestResultListAdapter extends RecyclerView.Adapter<BestResultListAd
     }
 
     void setBestResults(List<BestResult> bestResultsG){
+        Log.d(TAG, "setBestResults: started");
         bestResults = bestResultsG;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
+        Log.d(TAG, "getItemCount: started");
         if(bestResults != null){
             return bestResults.size();
         }

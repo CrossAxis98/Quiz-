@@ -1,6 +1,7 @@
 package com.example.quizam;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,8 +9,11 @@ import androidx.preference.PreferenceFragmentCompat;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    private static final String TAG = "SettingsActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: started");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
         getSupportFragmentManager()
@@ -23,14 +27,17 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
+
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            Log.d(TAG, "onCreatePreferences: started");
             setPreferencesFromResource(R.xml.preferences, rootKey);
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected: started");
 
         switch (item.getItemId()) {
 

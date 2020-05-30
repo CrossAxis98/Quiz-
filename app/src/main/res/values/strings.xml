@@ -31,6 +31,7 @@
     <string name="score">wyniki</string>
     <string name="ExitStr">Wyjdź</string>
     <string name="SaveStr">Zapisz</string>
+    <string name="nowyRekodrd">Dodano nowy rekord</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
