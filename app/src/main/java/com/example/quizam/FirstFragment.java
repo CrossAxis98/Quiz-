@@ -326,6 +326,7 @@ public class FirstFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("Wyniki quizu");
         builder.setMessage(getString(R.string.results, totalGuessess, (1000/(double) totalGuessess)));
+       // builder.setMessage(getString(R.string.results2, (1000/(double) totalGuessess)));
         builder.setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -363,7 +364,8 @@ public class FirstFragment extends Fragment {
         Button btnSave = (Button) dialogSave.findViewById(R.id.btndialogSave);
         final EditText editTextNick = (EditText) dialogSave.findViewById(R.id.editTextNick);
         TextView textViewScore = (TextView) dialogSave.findViewById(R.id.textViewScore);
-        textViewScore.setText(getString(R.string.results, totalGuessess, (1000/(double) totalGuessess)));
+       // textViewScore.setText(getString(R.string.results, totalGuessess, (1000/(double) totalGuessess)));
+        textViewScore.setText(getString(R.string.results2,(1000/(double) totalGuessess)));
         bestResultViewModel = new ViewModelProvider(this).get(BestResultViewModel.class);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override

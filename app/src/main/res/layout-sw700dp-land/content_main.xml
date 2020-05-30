@@ -12,11 +12,11 @@
 
     <fragment
         android:id="@+id/settingsActivityFragment"
-        android:name="com.example.quizam.SecondFragment"
+        android:name="com.example.quizam.SettingsActivity$SettingsFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        tools:layout="@layout/fragment_second" />
+        tools:layout="@layout/best_results_layout" />
 
     <fragment
         android:id="@+id/quizFragment"

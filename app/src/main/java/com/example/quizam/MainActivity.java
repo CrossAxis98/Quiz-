@@ -73,9 +73,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        int orientation = getResources().getConfiguration().orientation;
+       int orientation = getResources().getConfiguration().orientation;
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
 
-        if(orientation == Configuration.ORIENTATION_PORTRAIT)
+       /* if(orientation == Configuration.ORIENTATION_PORTRAIT)
         {
             // Inflate the menu; this adds items to the action bar if it is present.
             getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         else
         {
             return false;
-        }
+        }*/
 
 
     }
@@ -102,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_best:
                 Intent bestResIntent = new Intent(this, BestResultsActivity.class);
                 startActivity(bestResIntent);
+                return true;
+
         }
         return super.onOptionsItemSelected(item);
     }

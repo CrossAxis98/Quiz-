@@ -22,6 +22,7 @@
     <string name="ok">Zagraj ponownie</string>
     <string name="restarting_quiz">Quiz zostanie uruchomiony ponownie z nowymi ustawieniami</string>
     <string name="results">%1$d odpowiedzi, %2$.02f%% poprawnych</string>
+    <string name="results2">%.2f%% poprawnych</string>
     <string name="furniture_categories">Kategorie</string>
     <string name="furniture_categories_description">Kategorie których ma dotyczyć quiz</string>
     <string name="title_activity_settings">Ustawienia</string>

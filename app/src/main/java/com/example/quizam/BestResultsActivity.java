@@ -1,5 +1,6 @@
 package com.example.quizam;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import java.util.List;
@@ -41,6 +43,23 @@ public class BestResultsActivity extends AppCompatActivity {
             }
         });
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
