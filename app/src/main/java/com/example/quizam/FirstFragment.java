@@ -1,6 +1,5 @@
 package com.example.quizam;
 
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
@@ -21,17 +20,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.SecureRandom;
@@ -45,11 +40,11 @@ public class FirstFragment extends Fragment {
     private static final String TAG = "FirstFragment";
 
     private static final int FURNITURES_IN_QUIZ = 10;
-
+    /*Nazwy plików z meblami*/
     private List<String> fileNameLists;
-
+    /*Lista plików z obrazami mebli biorących udział w quizie */
     private List<String> quizFurnituresList;
-
+    /*Wybrane kategorie w bieżącej rozgrywce*/
     private Set<String> categoriesSet;
 
     private String correctAnswer;
@@ -57,21 +52,21 @@ public class FirstFragment extends Fragment {
     private int totalGuessess;
 
     private int correctAnswers;
-
+    /*Liczba wierszy z przyciskami*/
     private int guessRows;
 
     private SecureRandom random;
-
+    /*Obieg do opóźniania ładowania kolejnej flagi w quizie*/
     private Handler handler;
-
+    /*Animacja dla błędnej odpowiedzi*/
     private Animation shakeAnimation;
-
+    /*Główny rozkład aplikacji*/
     private LinearLayout quizLinearLayout;
 
     private TextView questionNumberTextView;
-
+    /*Bieżąca flaga*/
     private ImageView furnitureImageView;
-
+    /*Tablica zawierająca wiersze przycisków odpowiedzi*/
     private LinearLayout[] guessLinearLayouts;
 
     private TextView answerTextView;
@@ -87,7 +82,6 @@ public class FirstFragment extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        // Inflate the layout for this fragment
         super.onCreateView(inflater, container, savedInstanceState);
 
         View view = inflater.inflate(R.layout.fragment_first, container, false);
@@ -125,8 +119,10 @@ public class FirstFragment extends Fragment {
     }
 
     public void updateGuessRows(SharedPreferences sharedPreferences) {
+        /*Pobranie informacji o ilości przycisków odpowiedzi do wyświetlenia*/
         String choices = sharedPreferences.getString(MainActivity.CHOICES, null);
         Log.d(TAG, "updateGuessRows: started");
+        /*Liczba wierszy z przyciskami do wyświetlenia*/
         guessRows = Integer.parseInt(choices) / 2;
 
         for (LinearLayout layout : guessLinearLayouts) {
@@ -146,11 +142,11 @@ public class FirstFragment extends Fragment {
 
     public void resetQuiz(){
         Log.d(TAG, "resetQuiz: started");
-
+        /*Dostęp do folderu assets*/
         AssetManager assets = getActivity().getAssets();
 
         fileNameLists.clear();
-
+        /*Pobranie nazw plików dla wybranych kategorii*/
         try {
             for(String category: categoriesSet) {
                 String[] paths = assets.list(category);
@@ -174,6 +170,7 @@ public class FirstFragment extends Fragment {
         int furnitureCounter = 1;
         int numberOfFurnitures = fileNameLists.size();
 
+        /*Dla danej ilości elementów biorących udział w quizie wylosuj tyle obrazów i dodaj do quizFurnituresList */
         while(furnitureCounter <= FURNITURES_IN_QUIZ)
         {
             int randomIndex = random.nextInt(numberOfFurnitures);
@@ -207,6 +204,7 @@ public class FirstFragment extends Fragment {
 
         try (InputStream inputStreamFurniture = assets.open(category + "/" + nextImage + ".jpg")) {
 
+            /*Załadowanie obrazu jako obiekt drawable*/
             Drawable drawableFurniture = Drawable.createFromStream(inputStreamFurniture, nextImage);
 
             furnitureImageView.setImageDrawable(drawableFurniture);
@@ -338,7 +336,6 @@ public class FirstFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("Wyniki quizu");
         builder.setMessage(getString(R.string.results, totalGuessess, (1000/(double) totalGuessess)));
-       // builder.setMessage(getString(R.string.results2, (1000/(double) totalGuessess)));
         builder.setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -377,7 +374,6 @@ public class FirstFragment extends Fragment {
         Button btnSave = (Button) dialogSave.findViewById(R.id.btndialogSave);
         final EditText editTextNick = (EditText) dialogSave.findViewById(R.id.editTextNick);
         TextView textViewScore = (TextView) dialogSave.findViewById(R.id.textViewScore);
-       // textViewScore.setText(getString(R.string.results, totalGuessess, (1000/(double) totalGuessess)));
         textViewScore.setText(getString(R.string.results2,(1000/(double) totalGuessess)));
         bestResultViewModel = new ViewModelProvider(this).get(BestResultViewModel.class);
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -395,12 +391,6 @@ public class FirstFragment extends Fragment {
         dialogSave.show();
 
     }
-
-
-
-
-
-
 
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {

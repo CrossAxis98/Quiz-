@@ -1,9 +1,7 @@
 package com.example.quizam;
 
 import android.app.Application;
-
 import androidx.lifecycle.LiveData;
-
 import java.util.List;
 
 public class BestResultRepository {

@@ -1,25 +1,14 @@
 package com.example.quizam;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
-import android.nfc.Tag;
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 
 import java.util.Set;
@@ -27,16 +16,15 @@ import java.util.Set;
 public class MainActivity extends AppCompatActivity {
 
     public static final String CHOICES = "pref_numberOfChoices";
+
     public static final String CATEGORIES = "pref_categoriesToInclude";
 
     private static final String TAG = "MainActivity";
 
-
-    private boolean phoneDevice = true;
-
+    /*Czy nastąpiła zmiana preferencji*/
     private boolean preferencesChanged = true;
-    SharedPreferences preferences;
 
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,21 +34,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Log.d(TAG, "onCreate: started");
 
+        /* Domyślne ustawienia dla obiektu SharedPreferences */
         androidx.preference.PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        /* Nasłuchiwanie zmian obiektu */
         androidx.preference.PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(preferenceChangeListener);
+
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        int screenSize = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
-
-        if ((screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE) || (screenSize == Configuration.SCREENLAYOUT_SIZE_XLARGE))
-        {
-            phoneDevice = false;
-        }
-
-         if(phoneDevice) {
-          setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-        }
-
-
     }
 
     @Override
@@ -69,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         Log.d(TAG, "onStart: started");
-      //  Context mContext = getApplicationContext();
-      //  SharedPreferences sharedPreferences = mContext.getSharedPreferences(CATEGORIES, Context.MODE_PRIVATE);
+        //Context mContext = getApplicationContext();
+        //SharedPreferences sharedPreferences = mContext.getSharedPreferences(CATEGORIES, Context.MODE_PRIVATE);
         if(preferencesChanged)
         {
             FirstFragment quizFragment = (FirstFragment) getSupportFragmentManager().findFragmentById(R.id.quizFragment);
@@ -84,21 +63,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.d(TAG, "onCreateOptionsMenu: started");
-       int orientation = getResources().getConfiguration().orientation;
+      // int orientation = getResources().getConfiguration().orientation;
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-
-       /* if(orientation == Configuration.ORIENTATION_PORTRAIT)
-        {
-            // Inflate the menu; this adds items to the action bar if it is present.
-            getMenuInflater().inflate(R.menu.menu_main, menu);
-            return true;
-        }
-        else
-        {
-            return false;
-        }*/
-
 
     }
 
