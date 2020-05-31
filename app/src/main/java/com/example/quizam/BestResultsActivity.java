@@ -29,7 +29,7 @@ public class BestResultsActivity extends AppCompatActivity {
         final BestResultListAdapter adapter = new BestResultListAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        setTitle("Najlepsze Wyniki");
         bestResultViewModel = new ViewModelProvider(this).get(BestResultViewModel.class);
 
         bestResultViewModel.getAllMeasurements().observe(this, new Observer<List<BestResult>>() {
