@@ -9,6 +9,7 @@ Android quiz application with furnitures names to guess. Furnitures placed in qu
 * 10 questions 
 * implicitly 4 answers
 * possibility to choose categories and number of answers
+* possibility to save best results
 
 ## Demo
 ![Quiz](Demo/QuizGif.gif)
